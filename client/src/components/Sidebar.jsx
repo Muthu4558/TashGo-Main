@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { setOpenSidebar } from "../redux/slices/authSlice";
 import clsx from "clsx";
-import logo2 from "../assets/images/logo2.png";
+import Logo2 from "../assets/images/logo2.png";
 
 // Sidebar links for normal Admins
 const adminLinks = [
