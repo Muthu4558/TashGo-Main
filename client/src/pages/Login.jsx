@@ -8,7 +8,7 @@ import { useLoginMutation } from "../redux/slices/api/authApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
 import { toast } from "sonner";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Logo2 from "../assets/images/Logo2.png"
+import logo2 from "../assets/images/logo2.png"
 
 const Login = () => {
   const { user } = useSelector((state) => state.auth);
