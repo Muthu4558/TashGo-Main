@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import Notice from "../models/notification.js";
 import Task from "../models/task.js";
 import User from "../models/user.js";
 
@@ -57,13 +56,6 @@ export const createTask = async (req, res) => {
       tenantId,
     });
 
-    await Notice.create({
-      team,
-      text,
-      task: task._id,
-      tenantId,
-    });
-
     // Fetch team members' emails and send email notifications
     for (const userId of team) {
       const user = await User.findOne({ _id: userId, tenantId }); // Ensure user belongs to the same tenant
@@ -101,13 +93,6 @@ export const duplicateTask = async (req, res) => {
       _id: undefined, // Remove the existing _id to create a new one
       title: task.title + " - Duplicate",
       tenantId, // Ensure new task belongs to the same tenant
-    });
-
-    await Notice.create({
-      team: task.team,
-      text: `Duplicate of task "${task.title}" has been created.`,
-      task: newTask._id,
-      tenantId,
     });
 
     res.status(200).json({ status: true, message: "Task duplicated successfully." });
