@@ -1,7 +1,6 @@
 import User from "../models/user.js"
 import Task from "../models/task.js";
 import { createJWT } from "../config/db.js";
-import Notice from "../models/notification.js";
 import nodemailer from 'nodemailer';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -310,33 +309,6 @@ export const updateUserProfile = async (req, res) => {
     } else {
       res.status(404).json({ status: false, message: "User not found" });
     }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ status: false, message: error.message });
-  }
-};
-
-export const markNotificationRead = async (req, res) => {
-  try {
-    const { userId } = req.user;
-
-    const { isReadType, id } = req.query;
-
-    if (isReadType === "all") {
-      await Notice.updateMany(
-        { team: userId, isRead: { $nin: [userId] } },
-        { $push: { isRead: userId } },
-        { new: true }
-      );
-    } else {
-      await Notice.findOneAndUpdate(
-        { _id: id, isRead: { $nin: [userId] } },
-        { $push: { isRead: userId } },
-        { new: true }
-      );
-    }
-
-    res.status(201).json({ status: true, message: "Done" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ status: false, message: error.message });
